@@ -87,7 +87,7 @@ train(
     enc_train,
     enc_dev,
     epoch_num=50,
-    learning_rate=0.0001,
+    learning_rate=0.01,
     report_rate=5
 )
 

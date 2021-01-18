@@ -58,9 +58,14 @@ model = nn.Sequential(
 #############################################
 
 train(model, loss, accuracy, enc_train, enc_dev, epoch_num=3,
-        learning_rate=0.00001, report_rate=1)
+        learning_rate=0.001, report_rate=1)
 train(model, loss, accuracy, enc_train, enc_dev, epoch_num=2,
-        learning_rate=0.000001, report_rate=1)
+        learning_rate=0.0001, report_rate=1)
+# => @1: loss(train)=14411.733, acc(train)=0.822, acc(dev)=0.808
+# => @2: loss(train)=9076.391, acc(train)=0.871, acc(dev)=0.824
+# => @3: loss(train)=6773.723, acc(train)=0.911, acc(dev)=0.829
+# => @1: loss(train)=3628.002, acc(train)=0.952, acc(dev)=0.845
+# => @2: loss(train)=2555.633, acc(train)=0.963, acc(dev)=0.845
 
 #############################################
 # EVALUATION

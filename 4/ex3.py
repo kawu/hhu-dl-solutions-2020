@@ -26,7 +26,7 @@ model = create_model(
 )
 
 # TODO: Create optimizer (e.g. torch.optim.Adam) with appropriate arguments
-optim = torch.optim.Adam(model.parameters())
+optim = torch.optim.Adam(model.parameters(), lr=1.0)
 
 # Perform SGD for a selected number of epochs
 epoch_num = 50    # TODO: change to None
@@ -35,7 +35,8 @@ for k in range(epoch_num):
         # TODO: Calculate the loss, call backward
         # TODO: Apply the optimisation step
         calculate_loss(model(x), y).backward()
-        optim.step()	# version of `nudge` provided by `Adam`
+        optim.step()        # version of `nudge` provided by `Adam`
+        optim.zero_grad()   # reset to zero all the gradients
 
 #################################################
 # EVALUATION SECTION: DO NOT MODIFY
