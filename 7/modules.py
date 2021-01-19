@@ -95,29 +95,6 @@ class Max(nn.Module):
         return torch.max(m, dim=0).values
 
 
-class SimpleConv(nn.Module):
-
-    """The simple variant of the convolution.
-
-    The length of the output sequence will be smaller than the length of the
-    input sequence (if kernel size > 1).
-    """
-
-    def __init__(self, inp_size: int, out_size: int, kernel_size=1):
-        super().__init__()
-        self.kernel_size = kernel_size
-        self.conv = nn.Conv1d(inp_size, out_size, kernel_size)
-
-    def forward(self, x):
-        # As usual, we have to account for the batch dimension.  On top
-        # of that, the convolution requires that the sentence dimension and
-        # the embedding dimension are swapped.
-        x = x.view(1, x.shape[1], x.shape[0])
-        out = self.conv(x)
-        out_reshaped = out.view(out.shape[2], out.shape[1])
-        return out_reshaped
-
-
 class Replace(nn.Module):
 
     """A replacement module which, given a (vector) tensor of integer indices,
