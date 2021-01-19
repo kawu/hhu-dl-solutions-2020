@@ -59,30 +59,29 @@ class CBOW(nn.Module):
     '''
     def forward(self, m: torch.Tensor) -> torch.Tensor:
         n = len(m)
-        sm = torch.sum(m, dim=0)
-        if n > 1:
-            return sm / n
-        else:
-            return sm
+        return torch.sum(m, dim=0)
 
 model = nn.Sequential(
     nn.Embedding(char_enc.size()+1, 25, padding_idx=char_enc.size()),
-    # nn.Dropout(p=0.1),
-    SameConv(25, 300, kernel_size=3),
-    # nn.LeakyReLU(),
-    nn.Linear(300, lang_enc.size()),
+    SameConv(25, 300, kernel_size=5),
     CBOW(),
-    # NOTE: You can also swap CBOW and the last Linear module
+    nn.Linear(300, lang_enc.size()),
 )
 
 #############################################
 # TRAINING
 #############################################
 
-train(model, loss, accuracy, enc_train, enc_dev, epoch_num=3,
-        learning_rate=0.00001, report_rate=1)
-train(model, loss, accuracy, enc_train, enc_dev, epoch_num=2,
-        learning_rate=0.000001, report_rate=1)
+train(model, loss, accuracy, enc_train, enc_dev, epoch_num=5,
+        learning_rate=0.001, report_rate=1)
+train(model, loss, accuracy, enc_train, enc_dev, epoch_num=5,
+        learning_rate=0.0001, report_rate=1)
+# => @1: loss(train)=22020.293, acc(train)=0.650, acc(dev)=0.661
+# =>                            ...
+# => @5: loss(train)=15158.640, acc(train)=0.718, acc(dev)=0.712
+# => @1: loss(train)=12112.926, acc(train)=0.775, acc(dev)=0.774
+# =>                            ...
+# => @5: loss(train)=11466.919, acc(train)=0.786, acc(dev)=0.776
 
 #############################################
 # EVALUATION
